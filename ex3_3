@@ -1,0 +1,64 @@
+/*
+ * main.c
+ *
+ *  Created on: 2018. 10. 9.
+ *      Author: pyjune
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//(get) 특정 bit 값 얻어내기
+int getBit(int num, int i);	/* num변수의 2의 i승 bit값이 0이면 0, 1이면 1을 리턴 */
+//(set) 특정 bit값을 1로 만들기
+int setBit(int num, int i);	/* num변수의 2의 i승 bit값을 1로 만든 후 num값 리턴 */
+//(clear) 특정 비트값을 0으로 지우기
+int clearBit(int num, int i);	/* num변수의 2의 i승 bit값을 0으로 만든 후 num값 리턴*/
+int clearBitsMSBthroughI(int num, int i);	/* MSB부터 i승 비트까지 모두 0으로 지움 */
+int clearBitsIthrough0(int num, int i);		/* i승 비트 ~ 0승 비트까지 모두 0으로 지움 */
+//(update) 특정 bit를 원하는 값으로 변경하기
+int updateBit(int num, int i, int value);	/* i승 비트의 값을 value(0 or 1)값으로 변경 */
+
+void printByte(int n);
+
+int main(void)
+{
+	printf("%d\n", getBit(0x80, 7));
+	printf("%d\n", getBit(0x80, 6));
+	printf("%x\n", clearBitsMSBthroughI(0xffffffff, 16));
+	printf("%x\n", clearBitsIthrough0(0xffffffff, 15));
+}
+
+//(get) 특정 bit 값 얻어내기
+int getBit(int num, int i)	/* num변수의 2의 i승 bit값이 0이면 0, 1이면 1을 리턴 */
+{
+	return (num&(1<<i))>>i;
+}
+//(set) 특정 bit값을 1로 만들기
+int setBit(int num, int i)	/* num변수의 2의 i승 bit값을 1로 만든 후 num값 리턴 */
+{
+	num |= 1<<i;
+	return num;
+}
+//(clear) 특정 비트값을 0으로 지우기
+int clearBit(int num, int i)	/* num변수의 2의 i승 bit값을 0으로 만든 후 num값 리턴*/
+{
+	num &= ~(1<<i);
+	return num;
+}
+int clearBitsMSBthroughI(int num, int i)	/* MSB부터 i승 비트까지 모두 0으로 지움 */
+{
+	num &= ((1<<i)-1);
+	return num;
+}
+int clearBitsIthrough0(int num, int i)		/* i승 비트 ~ 0승 비트까지 모두 0으로 지움 */
+{
+	num &= ~((2<<i)-1);
+	return num;
+}
+//(update) 특정 bit를 원하는 값으로 변경하기
+int updateBit(int num, int i, int value)	/* i승 비트의 값을 value(0 or 1)값으로 변경 */
+{
+	num = (value)? (num|(1<<i)):(num&~(1<<i));
+	return num;
+}
