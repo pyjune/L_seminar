@@ -60,5 +60,7 @@ int clearBitsIthrough0(int num, int i)		/* i승 비트 ~ 0승 비트까지 모�
 int updateBit(int num, int i, int value)	/* i승 비트의 값을 value(0 or 1)값으로 변경 */
 {
 	num = (value)? (num|(1<<i)):(num&~(1<<i));
+	// num &= ~(1<<i);
+	// num |= value<<i;
 	return num;
 }
